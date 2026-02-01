@@ -1,0 +1,173 @@
+================================================================================
+                       🚨 FIX NETWORK ERROR 🚨
+                    YOU NEED TWO SERVERS RUNNING
+================================================================================
+
+ERROR YOU'RE SEEING:
+  "AxiosError: Network Error"
+
+WHY:
+  ❌ Backend API (port 8000) is NOT running
+  ✅ Frontend (port 3000) is running
+  
+BOTH MUST RUN SIMULTANEOUSLY!
+
+================================================================================
+SOLUTION - RUN TWO SERVERS
+================================================================================
+
+EASIEST WAY (Recommended):
+════════════════════════════════════════════════════════════════════════════
+
+Windows users:
+  Just run this ONE command:
+  
+    run-dev.bat
+  
+  This automatically opens 2 terminals with both servers!
+
+
+macOS/Linux users:
+  Just run this ONE command:
+  
+    chmod +x run-dev.sh
+    ./run-dev.sh
+  
+  This automatically opens 2 terminals with both servers!
+
+════════════════════════════════════════════════════════════════════════════
+
+MANUAL WAY (If automatic doesn't work):
+════════════════════════════════════════════════════════════════════════════
+
+Terminal 1 - FRONTEND
+  cd web
+  npm run dev
+  
+  → Opens: http://localhost:3000 (the website)
+
+
+Terminal 2 - BACKEND (IMPORTANT: NEW TERMINAL!)
+  cd api
+  python -m uvicorn main:app --reload
+  
+  → Opens: http://localhost:8000 (the API)
+  → Also: http://localhost:8000/docs (API documentation)
+
+IMPORTANT: Both terminals must stay OPEN while you work!
+When done, press Ctrl+C in each terminal to stop.
+
+================================================================================
+VERIFICATION
+================================================================================
+
+After starting both servers, check:
+
+✅ Frontend loads     → Visit http://localhost:3000
+✅ Backend responds   → Visit http://localhost:8000/docs
+✅ No Network Errors  → Try the shop page, should work!
+
+If you still get errors:
+  1. Did both servers start without errors?
+  2. Are both terminals OPEN right now?
+  3. Try refreshing the page (Ctrl+R or Cmd+R)
+  4. Check browser console for details
+
+================================================================================
+WHAT EACH SERVER DOES
+================================================================================
+
+FRONTEND (Port 3000)
+  - Shows the website
+  - You see pages & buttons
+  - Your browser runs this
+  - Written in: Next.js + React
+
+BACKEND (Port 8000)
+  - Handles data requests
+  - Connects to Firebase
+  - Processes payments
+  - Your frontend talks to this
+  - Written in: FastAPI + Python
+
+THEY WORK TOGETHER:
+  User clicks button → Frontend sends request → Backend processes → Returns data
+
+================================================================================
+COMMON MISTAKES
+================================================================================
+
+❌ Only running one server
+   → Website loads but Network Errors appear
+   
+❌ Running frontend in wrong directory
+   → You're in root, should be in "web" folder
+   
+❌ Running backend in wrong directory
+   → You're in root, should be in "api" folder
+   
+❌ Terminals are closed
+   → You closed the window, start again
+   
+❌ Wrong port numbers
+   → Frontend must be 3000, Backend must be 8000
+   → If ports conflict, close other apps using them
+
+✅ Open TWO terminals
+✅ Run frontend in one: cd web && npm run dev
+✅ Run backend in other: cd api && python -m uvicorn main:app --reload
+✅ Keep both open while working
+✅ Check both http://localhost:3000 and http://localhost:8000/docs
+
+================================================================================
+IF run-dev.bat DOESN'T WORK
+================================================================================
+
+1. Delete it and create new one:
+   
+   New file: run-dev.bat (in Artroom directory)
+   
+   Content:
+   ─────────────────────────────────────────────
+   @echo off
+   cd web && start cmd /k "npm run dev"
+   cd ../api && start cmd /k "python -m uvicorn main:app --reload"
+   ─────────────────────────────────────────────
+
+2. Save and run it
+
+OR just open two terminals manually and run commands above
+
+================================================================================
+QUICK CHECKLIST
+================================================================================
+
+Before asking for help:
+
+□ Do you have TWO terminal windows open right now?
+□ Is Terminal 1 showing "ready - started server on 0.0.0.0:3000"?
+□ Is Terminal 2 showing "Application startup complete"?
+□ Can you visit http://localhost:3000 and see the website?
+□ Can you visit http://localhost:8000/docs and see API documentation?
+
+If all checked, Network Error should be FIXED!
+
+If not:
+  - Check Terminal 1 for errors (frontend)
+  - Check Terminal 2 for errors (backend)
+  - Share the error messages
+
+================================================================================
+NEXT STEPS
+================================================================================
+
+1. Run: run-dev.bat (Windows) or ./run-dev.sh (Mac/Linux)
+2. Wait for both servers to start
+3. Visit: http://localhost:3000
+4. Try browsing products - should work now! ✅
+
+See: FIX_NETWORK_ERROR.md for more detailed explanation
+
+================================================================================
+                    YOU GOT THIS! 🚀
+================================================================================

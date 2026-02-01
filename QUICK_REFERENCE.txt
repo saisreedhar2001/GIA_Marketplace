@@ -1,0 +1,179 @@
+================================================================================
+                    GIA - QUICK REFERENCE CARD
+================================================================================
+
+GETTING STARTED
+================================================================================
+1. Run setup:       setup.bat (Windows) or ./setup.sh (Mac/Linux)
+2. Add .env files:  See QUICKSTART.md
+3. Start servers:   run-dev.bat or ./run-dev.sh
+4. Visit:           http://localhost:3000
+
+QUICK ERROR FIXES
+================================================================================
+Error: "Cannot find module '@tailwindcss/forms'"
+Fix:   clean-build.bat (Windows) or ./clean-build.sh (Mac/Linux)
+
+Error: "AxiosError: Network Error"
+Fix:   Make sure BOTH servers are running:
+       Terminal 1: cd web && npm run dev
+       Terminal 2: cd api && python -m uvicorn main:app --reload
+
+DOCUMENTATION
+================================================================================
+Starting out?           → START_HERE.md
+5-minute setup?         → QUICKSTART.md
+Step-by-step help?      → SETUP.md
+Something broken?       → TROUBLESHOOTING.md or FIX_TAILWIND_ERROR.md
+Architecture details?   → README.md
+Ready to deploy?        → DEPLOYMENT.md
+Launch checklist?       → CHECKLIST.md
+Lost in navigation?     → INDEX.md
+What was built?         → BUILD_SUMMARY.md
+
+USEFUL COMMANDS
+================================================================================
+Frontend:
+  npm install          → Install frontend dependencies
+  npm run dev          → Start dev server
+  npm run build        → Build for production
+  npm run lint         → Check for errors
+
+Backend:
+  pip install -r requirements.txt     → Install Python packages
+  python -m uvicorn main:app --reload → Start dev server
+
+DATABASE
+================================================================================
+View/edit data:  https://console.firebase.google.com/
+Add sample data: Use Firebase Console UI
+Collections:     users, products, orders, blog_posts, magazines, work_with_us_applications
+
+URLS
+================================================================================
+Frontend:       http://localhost:3000
+Backend API:    http://localhost:8000
+API Docs:       http://localhost:8000/docs
+Firebase:       https://console.firebase.google.com/
+Razorpay:       https://dashboard.razorpay.com/
+
+ENVIRONMENT SETUP
+================================================================================
+web/.env.local needs:
+  NEXT_PUBLIC_FIREBASE_API_KEY
+  NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+  NEXT_PUBLIC_FIREBASE_PROJECT_ID
+  NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+  NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+  NEXT_PUBLIC_FIREBASE_APP_ID
+  NEXT_PUBLIC_API_URL=http://localhost:8000
+  NEXT_PUBLIC_RAZORPAY_KEY_ID
+
+api/.env needs:
+  FIREBASE_PROJECT_ID
+  FIREBASE_PRIVATE_KEY
+  FIREBASE_CLIENT_EMAIL
+  RAZORPAY_KEY_ID
+  RAZORPAY_KEY_SECRET
+
+CACHE CLEANUP
+================================================================================
+Clear Next.js cache:       rm -rf web/.next
+Clear npm cache:           npm cache clean --force
+Clear Python cache:        rm -rf api/__pycache__
+Full cleanup script:       clean-build.bat or ./clean-build.sh
+
+PORT CONFLICTS
+================================================================================
+Port 3000 in use?  Ctrl+C to stop, or use: npm run dev -- -p 3001
+Port 8000 in use?  Ctrl+C to stop, or use: python -m uvicorn main:app --reload --port 8001
+
+COMMON ERRORS
+================================================================================
+Error                          Solution
+────────────────────────────────────────────────────────────────────────
+Module not found              → npm install (frontend) or pip install (backend)
+Port already in use           → Kill process or change port (see above)
+Firebase error                → Check .env files and credentials
+API connection error          → Make sure backend is running
+Cannot find Tailwind plugin   → Run clean-build.bat/sh
+npm ERR codes                 → Try npm cache clean --force
+
+VERIFICATION
+================================================================================
+Check setup:  verify-setup.bat (Windows) or ./verify-setup.sh (Mac/Linux)
+Check API:    Visit http://localhost:8000/docs
+Check data:   Visit https://console.firebase.google.com/
+
+PROJECT STRUCTURE
+================================================================================
+web/         → Next.js frontend code
+api/         → FastAPI backend code
+docs/        → Documentation files
+setup.bat    → Auto setup (Windows)
+setup.sh     → Auto setup (Mac/Linux)
+
+DEVELOPMENT WORKFLOW
+================================================================================
+1. Make code changes
+2. Servers auto-reload (Next.js & FastAPI both have hot reload)
+3. Check for errors in terminal
+4. Visit localhost:3000 to see changes
+
+API TESTING
+================================================================================
+Visit: http://localhost:8000/docs
+Interactive tool to test API endpoints without frontend
+
+FEATURES CHECKLIST
+================================================================================
+✅ User signup/login
+✅ Shop with products
+✅ Cart functionality
+✅ Checkout & payment
+✅ Order tracking
+✅ Art Room (blog)
+✅ Magazine subscription
+✅ Artist applications
+✅ User profile
+✅ Admin dashboard
+✅ Responsive design
+
+ROLES IN SYSTEM
+================================================================================
+user   → Regular user (shop, profile, orders)
+artist → Can create products & blog posts
+admin  → Full access (manage everything)
+
+FILES CHANGED/CREATED
+================================================================================
+Fixed:
+  api/requirements.txt (correct Razorpay package)
+  web/tailwind.config.js (removed missing plugin)
+  setup.bat, setup.sh (use pip not poetry)
+  SETUP.md (updated instructions)
+
+Created:
+  FIX_TAILWIND_ERROR.md (this error's solution)
+  clean-build.bat, clean-build.sh (cache cleanup)
+  TROUBLESHOOTING.md (error solutions)
+  And 6+ more docs
+
+NEXT STEPS
+================================================================================
+→ Read START_HERE.md
+→ Run setup scripts
+→ Configure .env files
+→ Start development servers
+→ Visit http://localhost:3000
+
+NEED HELP?
+================================================================================
+1. Check TROUBLESHOOTING.md
+2. Check FIX_TAILWIND_ERROR.md (if you hit that error)
+3. Read SETUP.md or QUICKSTART.md
+4. Check INDEX.md for all documentation
+
+================================================================================
+                          GOOD LUCK! 🎨
+================================================================================

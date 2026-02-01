@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+poetry.lock
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build
+.next/
+dist/
+build/
+*.egg-info/
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Firebase
+firebase-debug.log
+*.firebase.json
+
+# Cache
+.pytest_cache/
+.coverage
+htmlcov/

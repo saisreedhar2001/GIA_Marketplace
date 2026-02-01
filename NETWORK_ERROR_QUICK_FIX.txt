@@ -1,0 +1,27 @@
+================================================================================
+                     NETWORK ERROR - QUICK FIX
+================================================================================
+
+YOU'RE SEEING: AxiosError: Network Error
+
+REASON: Backend (port 8000) is NOT running
+
+FIX (Choose one):
+
+WINDOWS:
+  run-dev.bat
+
+MAC/LINUX:
+  chmod +x run-dev.sh && ./run-dev.sh
+
+MANUAL (Any OS):
+  Terminal 1: cd web && npm run dev
+  Terminal 2: cd api && python -m uvicorn main:app --reload
+
+VERIFY:
+  http://localhost:3000     (website)
+  http://localhost:8000/docs (API docs)
+
+BOTH MUST WORK!
+
+================================================================================

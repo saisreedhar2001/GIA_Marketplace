@@ -1,0 +1,56 @@
+================================================================================
+                   FIREBASE ERROR - INVALID API KEY
+                          QUICK FIX CHECKLIST
+================================================================================
+
+ERROR: Firebase: Error (auth/invalid-api-key)
+
+REASON: web/.env.local is missing or has wrong credentials
+
+QUICK FIX (5 minutes):
+
+1. Go to: https://console.firebase.google.com/
+2. Select your project
+3. Click ⚙️ Settings (gear icon)
+4. Find "Your apps" section
+5. Copy the web app config
+6. Open: web/.env.local
+7. Paste values for:
+   ✓ NEXT_PUBLIC_FIREBASE_API_KEY
+   ✓ NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+   ✓ NEXT_PUBLIC_FIREBASE_PROJECT_ID
+   ✓ NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+   ✓ NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+   ✓ NEXT_PUBLIC_FIREBASE_APP_ID
+
+8. Save file
+9. Clear cache:
+   Windows: rmdir /s /q web\.next
+   Mac/Linux: rm -rf web/.next
+
+10. Restart:
+    cd web && npm run dev
+
+11. Visit: http://localhost:3000
+
+SHOULD WORK NOW! ✅
+
+================================================================================
+
+VERIFY BEFORE RESTARTING:
+
+□ File exists: web/.env.local
+□ Contains 8 lines (6 Firebase + API_URL + Razorpay)
+□ All values filled (no "your_xxx" placeholders)
+□ Values copied from Firebase Console (not service account)
+□ No typos or extra spaces
+□ File saved
+
+================================================================================
+
+STILL NOT WORKING?
+
+Check: FIX_FIREBASE_ERROR.md (detailed troubleshooting)
+Check: GET_FIREBASE_CREDENTIALS.md (step-by-step credentials guide)
+
+================================================================================

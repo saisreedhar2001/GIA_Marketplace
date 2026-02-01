@@ -1,0 +1,156 @@
+================================================================================
+                .env.local vs .env.local.example
+                   UNDERSTAND THE DIFFERENCE
+================================================================================
+
+TWO DIFFERENT FILES:
+
+1. .env.local.example
+   └─ Template file (showing what variables you need)
+   └─ Located in: web/.env.local.example
+   └─ DO NOT EDIT THIS!
+   └─ This is just a guide
+
+2. .env.local
+   └─ YOUR ACTUAL CONFIG (with real values)
+   └─ Located in: web/.env.local
+   └─ CREATE THIS FILE!
+   └─ This is what Node.js reads
+
+================================================================================
+                            WHAT YOU SAW
+================================================================================
+
+You opened: web/.env.local.example
+
+It contains template like:
+    NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+    ...
+
+These are PLACEHOLDERS, not real values!
+
+================================================================================
+                        WHAT YOU NEED TO DO
+================================================================================
+
+Create NEW FILE: web/.env.local
+
+With REAL VALUES:
+    NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyD1234567890abc...
+    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=fir-gia-95889.firebaseapp.com
+    ...
+
+================================================================================
+                        STEP-BY-STEP
+================================================================================
+
+STEP 1: Open text editor (Notepad, VS Code, etc.)
+
+STEP 2: Create new file with this content:
+
+────────────────────────────────────────────────────────────────────────────
+NEXT_PUBLIC_FIREBASE_API_KEY=your_real_api_key_here
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=fir-gia-95889.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=fir-gia-95889
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=fir-gia-95889.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=123456789
+NEXT_PUBLIC_FIREBASE_APP_ID=1:123456789:web:abc123
+
+NEXT_PUBLIC_API_URL=http://localhost:8000
+
+NEXT_PUBLIC_RAZORPAY_KEY_ID=rzp_test_xxxxx
+────────────────────────────────────────────────────────────────────────────
+
+(Replace your_xxx with ACTUAL values from Firebase)
+
+STEP 3: Save file as: .env.local
+        Location: d:\Artroom\web\.env.local
+
+STEP 4: Restart Node.js:
+        cd web
+        rm -rf .next
+        npm run dev
+
+STEP 5: Visit: http://localhost:3000
+
+================================================================================
+                        FILE COMPARISON
+================================================================================
+
+TEMPLATE (.env.local.example):
+    NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key          ← PLACEHOLDER
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id    ← PLACEHOLDER
+
+YOUR CONFIG (.env.local):
+    NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyD...            ← REAL VALUE
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID=fir-gia-95889      ← REAL VALUE
+
+================================================================================
+                        FILE LOCATIONS
+================================================================================
+
+DON'T EDIT:
+    d:\Artroom\web\.env.local.example   ← Just a template
+
+CREATE THIS:
+    d:\Artroom\web\.env.local           ← Your actual config
+
+================================================================================
+                        VERIFY FILE EXISTS
+================================================================================
+
+Windows Command Line:
+    cd web
+    dir .env.local
+
+Should show: .env.local file exists
+
+Mac/Linux Terminal:
+    cd web
+    ls -la .env.local
+
+Should show: -rw-r--r-- .env.local
+
+================================================================================
+                        AFTER CREATING FILE
+================================================================================
+
+1. Clear cache:
+   Windows: rmdir /s /q web\.next
+   Mac/Linux: rm -rf web/.next
+
+2. Restart:
+   cd web && npm run dev
+
+3. Hard refresh browser:
+   Ctrl+Shift+R (Windows)
+   Cmd+Shift+R (Mac)
+
+4. Visit: http://localhost:3000
+
+Firebase error should be GONE! ✅
+
+================================================================================
+                        IMPORTANT NOTES
+================================================================================
+
+✓ .env.local contains SECRETS (API keys)
+✓ Should NEVER be committed to git
+✓ Is already in .gitignore (keep it that way)
+✓ Only you should have this file
+✓ Each developer has their own .env.local
+
+✗ .env.local.example is the template
+✗ CAN be committed to git (as reference)
+✗ Helps other developers know what they need
+
+================================================================================
+                        STILL CONFUSED?
+================================================================================
+
+Read: CREATE_ENV_LOCAL.md (detailed step-by-step)
+Read: GET_FIREBASE_CREDENTIALS.md (where to get values)
+Read: FIX_FIREBASE_ERROR.md (troubleshooting)
+
+================================================================================

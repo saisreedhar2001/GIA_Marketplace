@@ -1,0 +1,28 @@
+================================================================================
+                          404 PAGES NOT FOUND
+                             QUICK FIX
+================================================================================
+
+PROBLEM: Login/Signup pages show 404
+
+REASON: Next.js cache not cleared after file updates
+
+SOLUTION (Copy & paste these commands):
+
+Windows:
+  cd web
+  rmdir /s /q .next
+  npm run dev
+
+Mac/Linux:
+  cd web
+  rm -rf .next
+  npm run dev
+
+THEN VISIT:
+  http://localhost:3000/auth/login
+  http://localhost:3000/auth/signup
+
+SHOULD WORK NOW! ✅
+
+================================================================================
