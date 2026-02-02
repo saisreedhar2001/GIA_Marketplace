@@ -4,14 +4,6 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/store/auth'
 
-interface User {
-  id: string
-  email: string
-  name: string
-  role: string
-  createdAt: string
-}
-
 export default function AdminUsersPage() {
   const router = useRouter()
   const { user, loading: authLoading } = useAuthStore()
