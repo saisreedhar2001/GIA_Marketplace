@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image'
 import { useAuthStore } from '@/store/auth'
 import api from '@/lib/api'
 import { Order, Subscription, Product } from '@/types'
