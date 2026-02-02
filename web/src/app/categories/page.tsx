@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { useSearchParams, Suspense } from 'next/navigation'
+import { Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 function CategoriesContent() {
   const searchParams = useSearchParams()
