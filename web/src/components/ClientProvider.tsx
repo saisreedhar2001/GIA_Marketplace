@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { useAuthInit } from '@/hooks/useAuthInit'
 
