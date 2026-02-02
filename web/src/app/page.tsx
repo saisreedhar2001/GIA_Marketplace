@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import api from '@/lib/api'
 import { Product, BlogPost } from '@/types'
-import HeroThreeScene from '@/components/HeroThreeScene'
 import Carousel from '@/components/Carousel'
 import HorizontalCarousel from '@/components/HorizontalCarousel'
 
@@ -58,9 +57,8 @@ export default function Home() {
     <div className="bg-off-white">
       {/* Hero Section */}
       <section className="relative h-screen md:h-auto md:min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-terracotta/10 to-indigo/10"></div>
-        <HeroThreeScene />
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-4 py-8 md:py-0">
+         <div className="absolute inset-0 bg-gradient-to-br from-terracotta/10 to-indigo/10"></div>
+         <div className="relative z-10 text-center max-w-4xl mx-auto px-4 py-8 md:py-0">
            <div style={{ position: "relative", zIndex: 10, textAlign: "center", maxWidth: "56rem", margin: "0 auto", padding: "0 1rem" }}>
   <div style={{ position: "relative", height: "7rem", marginBottom: "1rem" }}>
 
