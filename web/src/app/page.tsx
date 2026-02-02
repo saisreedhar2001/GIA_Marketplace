@@ -18,7 +18,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-         // Fetch featured products
+         // Fetch featured products1
          try {
            const productsRes = await api.get('/products?featured=true&limit=6')
            setFeatured(productsRes.data.items || [])
