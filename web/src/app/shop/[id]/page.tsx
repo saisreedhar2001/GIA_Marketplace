@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import api from '@/lib/api'
 import { useCartStore } from '@/store/cart'
 import { Product } from '@/types'
@@ -18,7 +17,6 @@ interface ArtistInfo {
 
 export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
     const { id: productId } = React.use(params)
-    const router = useRouter()
     const [product, setProduct] = useState<Product | null>(null)
     const [artist, setArtist] = useState<ArtistInfo | null>(null)
     const [loading, setLoading] = useState(true)
