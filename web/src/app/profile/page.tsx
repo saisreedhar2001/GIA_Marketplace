@@ -10,7 +10,7 @@ export default function ProfilePage() {
     const router = useRouter()
     const { user, loading: authLoading } = useAuthStore()
     const [orders, setOrders] = useState<Order[]>([])
-    const [subscriptions, setSubscriptions] = useState<Subscription[]>([])
+    const [subscriptions] = useState<Subscription[]>([])
     const [portfolio, setPortfolio] = useState<Product[]>([])
     const [loading, setLoading] = useState(true)
     const [activeTab, setActiveTab] = useState<'profile' | 'orders' | 'subscription' | 'portfolio'>('profile')
