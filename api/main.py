@@ -836,6 +836,280 @@ async def get_user_analytics(current_user: dict = Depends(get_current_user)):
         )
 
 
+# ==================== WORK WITH US / APPLICATIONS ====================
+@app.post("/work-with-us")
+async def submit_artist_application(application: WorkWithUsCreate, current_user: dict = Depends(get_current_user)):
+    """Submit an artist application"""
+    try:
+        app_data = {
+            "userId": current_user.get("id"),
+            "artistName": application.artistName,
+            "email": application.email,
+            "artForm": application.artForm,
+            "region": application.region,
+            "yearsOfPractice": application.yearsOfPractice,
+            "bio": application.bio,
+            "portfolio": application.portfolio,
+            "mobileNumber": application.mobileNumber,
+            "status": "pending",
+            "createdAt": datetime.now(),
+            "updatedAt": datetime.now()
+        }
+        
+        # Save to Firestore in 'work_with_us_applications' collection
+        app_id = firebase_service.add_document("work_with_us_applications", app_data)
+        
+        # Also create/update user as artist in users collection
+        user_data = firebase_service.get_document("users", current_user.get("id"))
+        if user_data:
+            user_data["role"] = "artist"
+            user_data["artForm"] = application.artForm
+            user_data["updatedAt"] = datetime.now()
+            firebase_service.update_document("users", current_user.get("id"), user_data)
+        
+        return {
+            "id": app_id,
+            "message": "Application submitted successfully",
+            "status": "pending"
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+
+
+@app.get("/work-with-us")
+async def get_artist_applications(current_user: dict = Depends(get_current_user)):
+    """Get all artist applications (admin only)"""
+    try:
+        if current_user.get("email") != "cnssreedhar2001@gmail.com":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Super user only"
+            )
+        
+        applications = firebase_service.get_collection("work_with_us_applications")
+        return {"items": applications}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+
+
+@app.get("/admin/applications")
+async def get_admin_applications(current_user: dict = Depends(get_current_user)):
+    """Get all artist applications (admin only)"""
+    try:
+        if current_user.get("email") != "cnssreedhar2001@gmail.com":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Super user only"
+            )
+        
+        applications = firebase_service.get_collection("work_with_us_applications")
+        return {"items": applications}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+
+
+@app.post("/admin/applications/{app_id}/approve")
+async def approve_application(app_id: str, current_user: dict = Depends(get_current_user)):
+    """Approve an artist application and add to onboarding worklist"""
+    try:
+        if current_user.get("email") != "cnssreedhar2001@gmail.com":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Super user only"
+            )
+        
+        # Get the application
+        app = firebase_service.get_document("work_with_us_applications", app_id)
+        if not app:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Application not found"
+            )
+        
+        # Update application status to approved
+        app["status"] = "approved"
+        app["updatedAt"] = datetime.now()
+        firebase_service.update_document("work_with_us_applications", app_id, app)
+        
+        # Add to onboarding worklist
+        worklist_item = {
+            "applicationId": app_id,
+            "userId": app.get("userId"),
+            "artistName": app.get("artistName"),
+            "email": app.get("email"),
+            "artForm": app.get("artForm"),
+            "status": "pending",
+            "submittedAt": app.get("createdAt"),
+            "approvedAt": datetime.now(),
+            "tasks": {
+                "kyc_verification": {"completed": False, "completedAt": None},
+                "bank_details": {"completed": False, "completedAt": None},
+                "artist_profile": {"completed": False, "completedAt": None},
+                "store_setup": {"completed": False, "completedAt": None}
+            },
+            "createdAt": datetime.now(),
+            "updatedAt": datetime.now()
+        }
+        firebase_service.add_document("onboarding_worklist", worklist_item)
+        
+        return {
+            "message": "Application approved",
+            "status": "approved",
+            "addedToWorklist": True
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+
+
+@app.delete("/admin/applications/{app_id}")
+async def delete_application(app_id: str, current_user: dict = Depends(get_current_user)):
+    """Delete an artist application"""
+    try:
+        if current_user.get("email") != "cnssreedhar2001@gmail.com":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Super user only"
+            )
+        
+        # Check if application exists
+        app = firebase_service.get_document("work_with_us_applications", app_id)
+        if not app:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Application not found"
+            )
+        
+        # Delete the application
+        firebase_service.delete_document("work_with_us_applications", app_id)
+        
+        return {
+            "message": "Application deleted successfully"
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+
+
+# ==================== ONBOARDING MANAGEMENT ====================
+@app.get("/admin/onboarding")
+async def get_onboarding_list(current_user: dict = Depends(get_current_user)):
+    """Get all artists in onboarding (admin only)"""
+    try:
+        if current_user.get("email") != "cnssreedhar2001@gmail.com":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Super user only"
+            )
+        
+        onboarding = firebase_service.get_collection("onboarding_worklist")
+        return {"items": onboarding}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+
+
+@app.post("/admin/onboarding/{worklist_id}/status")
+async def update_onboarding_status(worklist_id: str, status_data: dict, current_user: dict = Depends(get_current_user)):
+    """Update onboarding status (admin only)"""
+    try:
+        if current_user.get("email") != "cnssreedhar2001@gmail.com":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Super user only"
+            )
+        
+        new_status = status_data.get("status")
+        if not new_status or new_status not in ["pending", "onboarded", "rejected"]:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Invalid status"
+            )
+        
+        # Get the worklist item
+        item = firebase_service.get_document("onboarding_worklist", worklist_id)
+        if not item:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Onboarding entry not found"
+            )
+        
+        # Update status
+        item["status"] = new_status
+        item["updatedAt"] = datetime.now()
+        firebase_service.update_document("onboarding_worklist", worklist_id, item)
+        
+        return {
+            "message": f"Status updated to {new_status}",
+            "status": new_status
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+
+
+@app.delete("/admin/onboarding/{worklist_id}")
+async def delete_onboarding_entry(worklist_id: str, current_user: dict = Depends(get_current_user)):
+    """Delete onboarding entry (admin only)"""
+    try:
+        if current_user.get("email") != "cnssreedhar2001@gmail.com":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Super user only"
+            )
+        
+        # Check if entry exists
+        item = firebase_service.get_document("onboarding_worklist", worklist_id)
+        if not item:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Onboarding entry not found"
+            )
+        
+        # Delete the entry
+        firebase_service.delete_document("onboarding_worklist", worklist_id)
+        
+        return {
+            "message": "Onboarding entry deleted successfully"
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+
+
 # ==================== HEALTH CHECK ====================
 @app.get("/health")
 async def health_check():

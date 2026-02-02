@@ -27,6 +27,12 @@ export default function AdminUsersPage() {
       return
     }
 
+    // Only super admin can access users page
+    if (!authLoading && user?.email !== 'cnssreedhar2001@gmail.com') {
+      router.push('/admin')
+      return
+    }
+
     if (authLoading) return
 
     // Note: This is a placeholder. In production, you'd need a backend endpoint to get all users

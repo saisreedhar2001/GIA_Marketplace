@@ -74,18 +74,18 @@ export default function CartPage() {
 
   return (
     <div className="bg-off-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="font-serif text-4xl font-bold text-indigo mb-12">Shopping Cart</h1>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <h1 className="font-serif text-3xl md:text-4xl font-bold text-indigo mb-8 md:mb-12">Shopping Cart</h1>
 
         {items.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-warm-gray text-lg mb-6">Your cart is empty</p>
+            <p className="text-warm-gray text-base md:text-lg mb-6">Your cart is empty</p>
             <Link href="/shop" className="btn-primary">
               Continue Shopping
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             {/* Cart Items */}
             <div className="lg:col-span-2">
               <div className="space-y-4">
@@ -96,19 +96,19 @@ export default function CartPage() {
                       key={item.productId}
                       className="card flex gap-4 items-center justify-between"
                     >
-                      <div className="flex gap-4 flex-1">
-                        {product?.image && (
-                          <div className="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-sand-beige">
-                            {/* Image would go here */}
-                          </div>
-                        )}
-                        <div className="flex-1">
-                          <h3 className="font-serif text-lg font-semibold text-indigo mb-1">
-                            {product?.title || 'Loading...'}
-                          </h3>
-                          <p className="text-warm-gray text-sm mb-2">
-                            ₹{item.price.toLocaleString()}
-                          </p>
+                      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 flex-1">
+                           {product?.image && (
+                             <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden flex-shrink-0 bg-sand-beige">
+                               {/* Image would go here */}
+                             </div>
+                           )}
+                           <div className="flex-1 min-w-0">
+                             <h3 className="font-serif text-base sm:text-lg font-semibold text-indigo mb-1 line-clamp-2">
+                               {product?.title || 'Loading...'}
+                             </h3>
+                             <p className="text-warm-gray text-xs sm:text-sm mb-2">
+                               ₹{item.price.toLocaleString()}
+                             </p>
                           <div className="flex items-center gap-2">
                             <button
                               onClick={() => updateQuantity(item.productId, Math.max(1, item.quantity - 1))}
@@ -124,20 +124,20 @@ export default function CartPage() {
                               +
                             </button>
                           </div>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-serif text-lg text-terracotta mb-2">
+                          </div>
+                          </div>
+                          <div className="text-right ml-auto">
+                          <p className="font-serif text-base sm:text-lg text-terracotta mb-2">
                           ₹{(item.price * item.quantity).toLocaleString()}
-                        </p>
-                        <button
+                          </p>
+                          <button
                           onClick={() => removeItem(item.productId)}
-                          className="text-sm text-terracotta hover:text-red-600 transition"
-                        >
+                          className="text-xs sm:text-sm text-terracotta hover:text-red-600 transition"
+                          >
                           Remove
-                        </button>
-                      </div>
-                    </div>
+                          </button>
+                          </div>
+                          </div>
                   )
                 })}
               </div>
@@ -146,29 +146,29 @@ export default function CartPage() {
             {/* Order Summary */}
             <div className="lg:col-span-1">
               <div className="card sticky top-20">
-                <h3 className="font-serif text-2xl font-bold text-indigo mb-6">
+                <h3 className="font-serif text-xl md:text-2xl font-bold text-indigo mb-6">
                   Order Summary
                 </h3>
 
                 <div className="space-y-3 mb-6 pb-6 border-b border-sand-beige">
-                  <div className="flex justify-between text-warm-gray">
+                  <div className="flex justify-between text-warm-gray text-sm">
                     <span>Subtotal</span>
                     <span>₹{total.toLocaleString()}</span>
                   </div>
-                  <div className="flex justify-between text-warm-gray">
+                  <div className="flex justify-between text-warm-gray text-sm">
                     <span>Shipping</span>
                     <span>Calculated at checkout</span>
                   </div>
-                  <div className="flex justify-between text-warm-gray">
+                  <div className="flex justify-between text-warm-gray text-sm">
                     <span>Tax</span>
                     <span>Calculated at checkout</span>
                   </div>
                 </div>
 
                 <div className="mb-6 pb-6 border-b border-sand-beige">
-                  <div className="flex justify-between items-center">
-                    <span className="font-serif text-lg font-bold text-indigo">Total</span>
-                    <span className="font-serif text-2xl text-terracotta">
+                  <div className="flex justify-between items-center gap-2">
+                    <span className="font-serif text-base md:text-lg font-bold text-indigo">Total</span>
+                    <span className="font-serif text-xl md:text-2xl text-terracotta whitespace-nowrap">
                       ₹{total.toLocaleString()}
                     </span>
                   </div>

@@ -7,13 +7,33 @@
   src: local('serif');
 }
 
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
 }
 
 body {
   background-color: #FFFBF7;
   color: #312653;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Mobile-friendly touch targets */
+button,
+a,
+input[type='button'],
+input[type='submit'],
+input[type='reset'] {
+  min-height: 44px;
+  min-width: 44px;
 }
 
 /* Custom scrollbar */
@@ -32,6 +52,13 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #9B5C3C;
+}
+
+/* Mobile scrollbar */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
 }
 
 /* Soft shadows and textures */
@@ -68,19 +95,31 @@ a {
 /* Button styles */
 .btn-primary {
   @apply px-6 py-3 bg-terracotta text-off-white rounded-lg font-medium hover:bg-opacity-90 transition;
+  @apply min-h-[44px] flex items-center justify-center whitespace-nowrap;
 }
 
 .btn-secondary {
   @apply px-6 py-3 border-2 border-terracotta text-terracotta rounded-lg font-medium hover:bg-terracotta hover:text-off-white transition;
+  @apply min-h-[44px] flex items-center justify-center whitespace-nowrap;
 }
 
 .btn-outline {
   @apply px-6 py-3 border border-indigo text-indigo rounded-lg font-medium hover:bg-indigo hover:text-off-white transition;
+  @apply min-h-[44px] flex items-center justify-center whitespace-nowrap;
+}
+
+/* Mobile button styles */
+@media (max-width: 768px) {
+  .btn-primary,
+  .btn-secondary,
+  .btn-outline {
+    @apply w-full px-4;
+  }
 }
 
 /* Cards */
 .card {
-  @apply bg-off-white rounded-lg shadow-soft hover-lift p-6;
+  @apply bg-white rounded-lg shadow-soft hover-lift p-6 border border-sand-beige/30;
 }
 
 /* Input styles */
@@ -88,6 +127,15 @@ input,
 textarea,
 select {
   @apply rounded-lg border border-sand-beige focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta focus:ring-opacity-20 transition;
+  @apply min-h-[44px] px-4 text-base;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+input[type='range'] {
+  min-height: auto;
+  padding: 0;
 }
 
 /* Animations */
@@ -120,8 +168,52 @@ select {
 }
 
 /* Responsive typography */
+@media (max-width: 1024px) {
+  h1 {
+    font-size: clamp(1.875rem, 5vw, 2.25rem);
+  }
+  h2 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+  }
+  h3 {
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+  }
+}
+
 @media (max-width: 768px) {
   html {
     font-size: 14px;
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+  }
+
+  h2 {
+    font-size: clamp(1.25rem, 5vw, 1.875rem);
+  }
+
+  h3 {
+    font-size: clamp(1rem, 4vw, 1.25rem);
+  }
+
+  p {
+    font-size: clamp(0.875rem, 3vw, 1rem);
+  }
+
+  /* More breathing room on mobile */
+  body {
+    padding-bottom: 20px;
+  }
+}
+
+/* Optimize for landscape on mobile */
+@media (max-height: 600px) and (max-width: 768px) {
+  .navbar {
+    padding: 0.5rem 0;
+  }
+
+  section {
+    padding: 1.5rem 0;
   }
 }

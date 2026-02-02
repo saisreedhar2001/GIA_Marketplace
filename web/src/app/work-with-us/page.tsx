@@ -12,11 +12,14 @@ export default function WorkWithUsPage() {
   const { user } = useAuthStore()
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState<WorkWithUsCreate>({
+    artistName: '',
+    email: user?.email || '',
     artForm: '',
     region: '',
     yearsOfPractice: 0,
     bio: '',
     portfolio: [],
+    mobileNumber: '',
   })
   const [portfolioInput, setPortfolioInput] = useState('')
 
@@ -54,14 +57,35 @@ export default function WorkWithUsPage() {
       return
     }
 
-    if (!formData.artForm || !formData.region || !formData.bio) {
+    if (!formData.artistName || !formData.email || !formData.artForm || !formData.region || !formData.bio || !formData.mobileNumber) {
       toast.error('Please fill all required fields')
       return
     }
 
     try {
       setLoading(true)
-      await api.post('/work-with-us', formData)
+      const submitData = {
+        ...formData,
+        userId: user?.id || '',
+      }
+      
+      await api.post('/work-with-us', submitData)
+      
+      // Send email notification to super admin
+      try {
+        await api.post('/email/notify-admin', {
+          type: 'new_artist_application',
+          applicantName: user?.name,
+          applicantEmail: user?.email,
+          artForm: formData.artForm,
+          region: formData.region,
+          mobileNumber: formData.mobileNumber,
+        })
+      } catch (emailError) {
+        console.warn('Email notification failed:', emailError)
+        // Don't fail the submission if email fails
+      }
+      
       toast.success('Application submitted! We\'ll review it soon.')
       router.push('/profile')
     } catch (error: any) {
@@ -88,6 +112,38 @@ export default function WorkWithUsPage() {
         {/* Application Form */}
         <form onSubmit={handleSubmit} className="card bg-white">
           <div className="space-y-6">
+            {/* Artist Name */}
+            <div>
+              <label className="block text-sm font-semibold text-indigo mb-2">
+                Artist Name *
+              </label>
+              <input
+                type="text"
+                name="artistName"
+                placeholder="Your name or artist name"
+                value={formData.artistName}
+                onChange={handleInputChange}
+                required
+                className="w-full px-4 py-2 border border-sand-beige rounded-lg focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta focus:ring-opacity-20"
+              />
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-semibold text-indigo mb-2">
+                Email Address *
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder="e.g., artist@example.com"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+                className="w-full px-4 py-2 border border-sand-beige rounded-lg focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta focus:ring-opacity-20"
+              />
+            </div>
+
             {/* Art Form */}
             <div>
               <label className="block text-sm font-semibold text-indigo mb-2">
@@ -106,18 +162,34 @@ export default function WorkWithUsPage() {
 
             {/* Region */}
             <div>
-              <label className="block text-sm font-semibold text-indigo mb-2">
-                Region / Origin *
-              </label>
-              <input
-                type="text"
-                name="region"
-                placeholder="e.g., Andhra Pradesh, Tamil Nadu, Rajasthan"
-                value={formData.region}
-                onChange={handleInputChange}
-                required
-                className="w-full px-4 py-2 border border-sand-beige rounded-lg focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta focus:ring-opacity-20"
-              />
+             <label className="block text-sm font-semibold text-indigo mb-2">
+               Region / Origin *
+             </label>
+             <input
+               type="text"
+               name="region"
+               placeholder="e.g., Andhra Pradesh, Tamil Nadu, Rajasthan"
+               value={formData.region}
+               onChange={handleInputChange}
+               required
+               className="w-full px-4 py-2 border border-sand-beige rounded-lg focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta focus:ring-opacity-20"
+             />
+            </div>
+
+            {/* Mobile Number */}
+            <div>
+             <label className="block text-sm font-semibold text-indigo mb-2">
+               Mobile Number *
+             </label>
+             <input
+               type="tel"
+               name="mobileNumber"
+               placeholder="e.g., +91 9876543210"
+               value={formData.mobileNumber}
+               onChange={handleInputChange}
+               required
+               className="w-full px-4 py-2 border border-sand-beige rounded-lg focus:outline-none focus:border-terracotta focus:ring-2 focus:ring-terracotta focus:ring-opacity-20"
+             />
             </div>
 
             {/* Years of Practice */}

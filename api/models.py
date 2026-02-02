@@ -169,11 +169,14 @@ class Magazine(MagazineBase):
 
 
 class WorkWithUsBase(BaseModel):
+    artistName: str
+    email: str
     artForm: str
     region: str
     yearsOfPractice: int
     bio: str
     portfolio: List[str]
+    mobileNumber: str
 
 
 class WorkWithUsCreate(WorkWithUsBase):

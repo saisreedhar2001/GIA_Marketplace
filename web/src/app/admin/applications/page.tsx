@@ -11,6 +11,12 @@ export default function AdminApplicationsPage() {
   useEffect(() => {
     if (!authLoading && user?.role !== 'admin') {
       router.push('/')
+      return
+    }
+
+    // Only super admin can access applications
+    if (!authLoading && user?.email !== 'cnssreedhar2001@gmail.com') {
+      router.push('/admin')
     }
   }, [user, authLoading, router])
 

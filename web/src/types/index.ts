@@ -4,6 +4,7 @@ export interface User {
   name: string
   phone?: string
   avatar?: string
+  portfolioUrl?: string
   role: 'user' | 'artist' | 'admin'
   createdAt: Date
   updatedAt: Date
@@ -130,7 +131,19 @@ export interface WorkWithUsApplication {
   yearsOfPractice: number
   portfolio: string[]
   bio: string
+  mobileNumber: string
   status: 'pending' | 'approved' | 'rejected'
   createdAt: Date
   updatedAt: Date
+}
+
+export interface WorkWithUsCreate {
+  artistName: string
+  email: string
+  artForm: string
+  region: string
+  yearsOfPractice: number
+  portfolio: string[]
+  bio: string
+  mobileNumber: string
 }

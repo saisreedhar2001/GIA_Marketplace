@@ -129,26 +129,26 @@ export default function ArtistDashboard() {
     <div className="bg-off-white min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
-        <div className="mb-12 flex items-center justify-between">
+        <div className="mb-8 md:mb-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="font-serif text-4xl font-bold text-indigo mb-2">Artist Dashboard</h1>
-            <p className="text-warm-gray">Manage your products, orders and sales</p>
+            <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-indigo mb-2">Artist Dashboard</h1>
+            <p className="text-xs sm:text-sm md:text-base text-warm-gray">Manage your products, orders and sales</p>
           </div>
           <Link
             href="/products/new"
-            className="px-6 py-3 bg-terracotta text-white rounded-lg hover:bg-opacity-80 transition"
+            className="w-full sm:w-auto px-6 py-3 bg-terracotta text-white rounded-lg hover:bg-opacity-80 transition text-center text-sm sm:text-base"
           >
             Upload Product
           </Link>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-8 border-b border-sand-beige overflow-x-auto">
+        <div className="flex gap-2 md:gap-4 mb-6 md:mb-8 border-b border-sand-beige overflow-x-auto">
           {(['overview', 'products', 'orders'] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-3 font-semibold transition ${
+              className={`px-3 md:px-4 py-2 md:py-3 text-xs sm:text-sm md:text-base font-semibold transition whitespace-nowrap ${
                 activeTab === tab
                   ? 'border-b-2 border-terracotta text-terracotta'
                   : 'text-warm-gray hover:text-indigo'
@@ -161,67 +161,46 @@ export default function ArtistDashboard() {
 
         {/* Overview Tab */}
         {activeTab === 'overview' && analytics && (
-          <div className="space-y-8">
+          <div className="space-y-6 md:space-y-8">
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
               <StatCard
                 label="Total Products"
                 value={analytics.totalProducts.toString()}
-                color="bg-blue-100 text-blue-900"
               />
               <StatCard
                 label="Total Orders"
                 value={analytics.totalOrders.toString()}
-                color="bg-green-100 text-green-900"
               />
               <StatCard
                 label="Completed Orders"
                 value={analytics.completedOrders.toString()}
-                color="bg-emerald-100 text-emerald-900"
               />
               <StatCard
                 label="Pending Orders"
                 value={analytics.pendingOrders.toString()}
-                color="bg-yellow-100 text-yellow-900"
-              />
-              <StatCard
-                label="Total Sales"
-                value={`₹${analytics.totalSales.toLocaleString()}`}
-                color="bg-terracotta text-white"
-              />
-              <StatCard
-                label="Items Sold"
-                value={analytics.totalItemsSold.toString()}
-                color="bg-purple-100 text-purple-900"
-              />
-              <StatCard
-                label="Avg Order Value"
-                value={`₹${analytics.averageOrderValue.toLocaleString('en-IN', {
-                  maximumFractionDigits: 0,
-                })}`}
-                color="bg-indigo text-white"
               />
             </div>
 
             {/* Summary Card */}
             <div className="card">
-              <h3 className="font-serif text-xl font-bold text-indigo mb-6">Sales Summary</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="border-l-4 border-terracotta pl-4">
-                  <p className="text-warm-gray text-sm mb-2">Total Revenue</p>
-                  <p className="font-serif text-3xl font-bold text-terracotta">
+              <h3 className="font-serif text-lg md:text-xl font-bold text-indigo mb-4 md:mb-6">Sales Summary</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+                <div className="border-l-4 border-terracotta pl-3 md:pl-4">
+                  <p className="text-warm-gray text-xs md:text-sm mb-2">Total Revenue</p>
+                  <p className="font-serif text-2xl md:text-3xl font-bold text-terracotta break-words">
                     ₹{analytics.totalSales.toLocaleString()}
                   </p>
                 </div>
-                <div className="border-l-4 border-green-600 pl-4">
-                  <p className="text-warm-gray text-sm mb-2">Orders Paid</p>
-                  <p className="font-serif text-3xl font-bold text-green-600">
+                <div className="border-l-4 border-green-600 pl-3 md:pl-4">
+                  <p className="text-warm-gray text-xs md:text-sm mb-2">Orders Paid</p>
+                  <p className="font-serif text-2xl md:text-3xl font-bold text-green-600">
                     {analytics.completedOrders}
                   </p>
                 </div>
-                <div className="border-l-4 border-yellow-600 pl-4">
-                  <p className="text-warm-gray text-sm mb-2">Pending Orders</p>
-                  <p className="font-serif text-3xl font-bold text-yellow-600">
+                <div className="border-l-4 border-yellow-600 pl-3 md:pl-4">
+                  <p className="text-warm-gray text-xs md:text-sm mb-2">Pending Orders</p>
+                  <p className="font-serif text-2xl md:text-3xl font-bold text-yellow-600">
                     {analytics.pendingOrders}
                   </p>
                 </div>
@@ -232,30 +211,30 @@ export default function ArtistDashboard() {
 
         {/* Products Tab */}
         {activeTab === 'products' && (
-          <div className="space-y-4">
+          <div className="space-y-3 md:space-y-4">
             {products.length === 0 ? (
-              <div className="card text-center py-12">
-                <p className="text-warm-gray mb-4">No products yet</p>
+              <div className="card text-center py-8 md:py-12">
+                <p className="text-warm-gray text-sm md:text-base mb-4">No products yet</p>
                 <Link
                   href="/products/new"
-                  className="inline-block px-6 py-2 bg-terracotta text-white rounded-lg hover:bg-opacity-80 transition"
+                  className="inline-block px-6 py-2 bg-terracotta text-white rounded-lg hover:bg-opacity-80 transition text-sm"
                 >
                   Upload Your First Product
                 </Link>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                 {products.map((product) => (
                   <div key={product.id} className="card hover:shadow-lg transition">
-                    <div className="mb-4">
-                      <div className="w-full h-32 bg-sand-beige rounded-lg flex items-center justify-center">
-                        <span className="text-warm-gray text-sm">Image</span>
+                    <div className="mb-3 md:mb-4">
+                      <div className="w-full h-24 md:h-32 bg-sand-beige rounded-lg flex items-center justify-center">
+                        <span className="text-warm-gray text-xs md:text-sm">Image</span>
                       </div>
                     </div>
-                    <h4 className="font-semibold text-indigo mb-2 line-clamp-2">{product.title}</h4>
-                    <p className="text-warm-gray text-sm mb-2">{product.category}</p>
-                    <div className="flex items-center justify-between mb-4">
-                      <p className="font-serif text-lg font-bold text-terracotta">
+                    <h4 className="font-semibold text-sm md:text-base text-indigo mb-2 line-clamp-2">{product.title}</h4>
+                    <p className="text-warm-gray text-xs md:text-sm mb-2">{product.category}</p>
+                    <div className="flex items-center justify-between mb-3 md:mb-4">
+                      <p className="font-serif text-base md:text-lg font-bold text-terracotta">
                         ₹{product.price.toLocaleString()}
                       </p>
                       <p className="text-xs text-warm-gray">Stock: {product.stock}</p>
@@ -263,11 +242,11 @@ export default function ArtistDashboard() {
                     <div className="flex gap-2">
                       <Link
                         href={`/products/${product.id}/edit`}
-                        className="flex-1 px-3 py-2 bg-blue-100 text-blue-700 rounded text-sm hover:bg-blue-200 transition text-center"
+                        className="flex-1 px-2 md:px-3 py-1 md:py-2 bg-blue-100 text-blue-700 rounded text-xs md:text-sm hover:bg-blue-200 transition text-center"
                       >
                         Edit
                       </Link>
-                      <button className="flex-1 px-3 py-2 bg-red-100 text-red-700 rounded text-sm hover:bg-red-200 transition">
+                      <button className="flex-1 px-2 md:px-3 py-1 md:py-2 bg-red-100 text-red-700 rounded text-xs md:text-sm hover:bg-red-200 transition">
                         Delete
                       </button>
                     </div>
@@ -280,26 +259,26 @@ export default function ArtistDashboard() {
 
         {/* Orders Tab */}
         {activeTab === 'orders' && (
-          <div className="space-y-4">
+          <div className="space-y-3 md:space-y-4">
             {orders.length === 0 ? (
-              <div className="card text-center py-12">
-                <p className="text-warm-gray">No orders yet</p>
+              <div className="card text-center py-8 md:py-12">
+                <p className="text-warm-gray text-sm md:text-base">No orders yet</p>
               </div>
             ) : (
               orders.map((order) => (
                 <div key={order.id} className="card">
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 md:mb-4 gap-3">
                     <div>
-                      <h4 className="font-semibold text-indigo">Order #{order.id.slice(0, 8)}</h4>
+                      <h4 className="font-semibold text-sm md:text-base text-indigo">Order #{order.id.slice(0, 8)}</h4>
                       <p className="text-xs text-warm-gray mt-1">
                         {new Date(order.createdAt).toLocaleDateString()}
                       </p>
                     </div>
-                    <div className="text-right">
-                      <p className="font-serif text-2xl font-bold text-terracotta">
+                    <div className="sm:text-right">
+                      <p className="font-serif text-xl md:text-2xl font-bold text-terracotta">
                         ₹{order.total.toLocaleString()}
                       </p>
-                      <p className={`text-sm font-semibold mt-1 ${
+                      <p className={`text-xs md:text-sm font-semibold mt-1 ${
                         order.paymentStatus === 'completed'
                           ? 'text-green-600'
                           : 'text-yellow-600'
@@ -308,8 +287,8 @@ export default function ArtistDashboard() {
                       </p>
                     </div>
                   </div>
-                  <div className="border-t border-sand-beige pt-4">
-                    <p className="text-sm text-warm-gray">
+                  <div className="border-t border-sand-beige pt-3 md:pt-4">
+                    <p className="text-xs md:text-sm text-warm-gray">
                       Items: {order.items.reduce((sum, item) => sum + item.quantity, 0)}
                     </p>
                   </div>
@@ -326,16 +305,14 @@ export default function ArtistDashboard() {
 function StatCard({
   label,
   value,
-  color,
 }: {
   label: string
   value: string
-  color: string
 }) {
   return (
-    <div className={`card ${color} text-center p-6`}>
-      <p className="text-sm opacity-80 mb-2">{label}</p>
-      <p className="font-serif text-3xl font-bold">{value}</p>
+    <div className="card min-h-[120px] md:min-h-[140px] flex flex-col justify-center text-center p-4 md:p-6">
+      <p className="text-xs md:text-sm text-warm-gray opacity-80 mb-2">{label}</p>
+      <p className="font-serif text-xl md:text-3xl font-bold text-terracotta break-words">{value}</p>
     </div>
   )
 }
