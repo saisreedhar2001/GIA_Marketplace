@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Product } from '@/types'
@@ -8,7 +8,6 @@ import { Product } from '@/types'
 export default function HorizontalCarousel({ products }: { products: Product[] }) {
   const [current, setCurrent] = useState(0)
   const [autoPlay, setAutoPlay] = useState(true)
-  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!autoPlay || products.length === 0) return
