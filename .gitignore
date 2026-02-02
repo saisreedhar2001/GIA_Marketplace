@@ -31,6 +31,8 @@ Thumbs.db
 # Firebase
 firebase-debug.log
 *.firebase.json
+serviceAccount.json
+api/serviceAccount.json
 
 # Cache
 .pytest_cache/
