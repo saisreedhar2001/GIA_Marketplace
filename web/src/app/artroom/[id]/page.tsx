@@ -2,21 +2,23 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import React from 'react'
 import api from '@/lib/api'
 import { BlogPost } from '@/types'
 
-export default function BlogPostPage({ params }: { params: { id: string } }) {
+export default function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = React.use(params)
   const [post, setPost] = useState<BlogPost | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetchPost()
-  }, [params.id])
+  }, [id])
 
   const fetchPost = async () => {
     try {
       setLoading(true)
-      const res = await api.get(`/blog/${params.id}`)
+      const res = await api.get(`/blog/${id}`)
       setPost(res.data)
     } catch (error) {
       console.error('Error fetching post:', error)
