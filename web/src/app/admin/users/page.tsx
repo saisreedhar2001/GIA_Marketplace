@@ -15,9 +15,7 @@ interface User {
 export default function AdminUsersPage() {
   const router = useRouter()
   const { user, loading: authLoading } = useAuthStore()
-  const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(true)
-  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     if (!authLoading && user?.role !== 'admin') {
