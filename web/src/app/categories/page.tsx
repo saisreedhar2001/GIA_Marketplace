@@ -1,9 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, Suspense } from 'next/navigation'
 
-export default function CategoriesPage() {
+function CategoriesContent() {
   const searchParams = useSearchParams()
   const selectedCategory = searchParams.get('cat') || ''
 
@@ -101,5 +101,13 @@ export default function CategoriesPage() {
         </section>
       )}
     </div>
+  )
+}
+
+export default function CategoriesPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CategoriesContent />
+    </Suspense>
   )
 }
