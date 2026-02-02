@@ -1,6 +1,6 @@
 from pydantic_settings import BaseSettings
 import os
-from typing import Optional
+from typing import Optional, List
 
 
 class Settings(BaseSettings):
@@ -11,7 +11,13 @@ class Settings(BaseSettings):
     razorpay_key_secret: str = "your_razorpay_secret"
     api_port: int = 8000
     environment: str = "development"
-    cors_origins: list = ["http://localhost:3000", "http://localhost:3001", "http://localhost:8000"]
+    cors_origins: List[str] = [
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:8000",
+        "https://gia-marketplace-web.vercel.app",
+        "*"
+    ]
 
     class Config:
         env_file = ".env"

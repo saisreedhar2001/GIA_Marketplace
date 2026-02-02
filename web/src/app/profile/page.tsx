@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image'
 import { useAuthStore } from '@/store/auth'
 import api from '@/lib/api'
 import { Order, Subscription, Product } from '@/types'
@@ -11,7 +10,7 @@ export default function ProfilePage() {
     const router = useRouter()
     const { user, loading: authLoading } = useAuthStore()
     const [orders, setOrders] = useState<Order[]>([])
-    const [subscriptions, setSubscriptions] = useState<Subscription[]>([])
+    const [subscriptions] = useState<Subscription[]>([])
     const [portfolio, setPortfolio] = useState<Product[]>([])
     const [loading, setLoading] = useState(true)
     const [activeTab, setActiveTab] = useState<'profile' | 'orders' | 'subscription' | 'portfolio'>('profile')

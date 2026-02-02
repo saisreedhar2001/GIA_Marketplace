@@ -3,23 +3,11 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/store/auth'
-import api from '@/lib/api'
-import toast from 'react-hot-toast'
-
-interface User {
-  id: string
-  email: string
-  name: string
-  role: string
-  createdAt: string
-}
 
 export default function AdminUsersPage() {
   const router = useRouter()
   const { user, loading: authLoading } = useAuthStore()
-  const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(true)
-  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     if (!authLoading && user?.role !== 'admin') {

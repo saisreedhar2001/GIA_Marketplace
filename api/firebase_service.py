@@ -81,8 +81,19 @@ class FirebaseService:
 
     def get_collection(self, collection: str, limit: int = 100, offset: int = 0) -> List[dict]:
         """Get all documents from a collection"""
-        docs = self.db.collection(collection).limit(limit).offset(offset).stream()
-        return [{**doc.to_dict(), "id": doc.id} for doc in docs]
+        try:
+            query = self.db.collection(collection)
+            if offset > 0:
+                # Firestore doesn't support offset natively, so we fetch extra and slice
+                docs = query.limit(limit + offset).stream()
+                docs_list = [{**doc.to_dict(), "id": doc.id} for doc in docs]
+                return docs_list[offset:offset + limit]
+            else:
+                docs = query.limit(limit).stream()
+                return [{**doc.to_dict(), "id": doc.id} for doc in docs]
+        except Exception as e:
+            print(f"Error fetching collection {collection}: {e}")
+            return []
 
     def query_collection(
         self, collection: str, field: str, operator: str, value: Any, limit: int = 100

@@ -23,8 +23,8 @@ export default function ArtRoomPage() {
       const res = await api.get('/blog')
       let items = res.data.items || []
       if (selectedCategory) {
-        items = items.filter((p) => p.category === selectedCategory)
-      }
+         items = items.filter((p: BlogPost) => p.category === selectedCategory)
+       }
       setPosts(items)
     } catch (error) {
       console.error('Error fetching posts:', error)
